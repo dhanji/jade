@@ -17,8 +17,10 @@ public class Jade {
 
   public Jade() {
     register("javascript", new JavascriptFilter());
+    register("cdata", new CDataFilter());
     register("css", new CssFilter());
     register("markdown", new MarkdownFilter());
+    register("plain", new PlainFilter());
   }
 
   public void register(String name, Filter filter) {
@@ -64,6 +66,9 @@ public class Jade {
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith(":")) {
         node = new FilterNode(this);
+        trimmedLine = trimmedLine.substring(1);
+      } else if (trimmedLine.startsWith("=")) {
+        node = new ExpressionNode();
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("-#")) {
         node = new IgnoredNode();

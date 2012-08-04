@@ -27,6 +27,7 @@ public class SimpleTemplateTest {
         "      alert('hi');\n" +
         "      console.log('hi');\n" +
         "  body\n" +
+        "    br\n" +
         "    p#f.doo foo\n" +
         "    'pbj.doo'\n" +
         "      /This is\n" +
@@ -36,7 +37,8 @@ public class SimpleTemplateTest {
         "      |Scrub Kindle3\n" +
         "      :markdown\n" +
         "        Now is the *winter* of our poop.\n" +
-        "      p.doo\n" +
+        "      = 1 + 2\n" +
+        "      .doo\n" +
         "        <div id='blah'>sup</div>\n",
         context);
 

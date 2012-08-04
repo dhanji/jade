@@ -35,6 +35,9 @@ class Node {
       tag = line.substring(1, end);
       text = line.substring(end + 1);
 
+      if (tag.isEmpty())
+        tag = "div";
+
       if (text.isEmpty())
         text = null;
       return;
@@ -60,6 +63,9 @@ class Node {
         tag = split[0];
       classes = split[1];
     }
+
+    if (tag.isEmpty())
+      tag = "div";
 
     if (text != null) {
       Matcher matcher = TextNode.START_OF_EXPR.matcher(text);
