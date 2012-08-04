@@ -22,6 +22,7 @@ class Node {
   private boolean empty;
   private String id;
   private String classes;
+  private ExpressionNode wrappedExpression;
   private List<Node> children = new ArrayList<Node>();
 
   public void setTemplate(int indent, String line) {
@@ -68,7 +69,12 @@ class Node {
     if (tag.isEmpty())
       tag = "div";
 
-    if (text != null) {
+    // This is an expression tag.
+    if (tag.endsWith("=")) {
+      tag = tag.substring(0, tag.length() - 1);
+      wrappedExpression = new ExpressionNode();
+      wrappedExpression.setTemplate(indent, text);
+    } else if (text != null) {
       Matcher matcher = TextNode.START_OF_EXPR.matcher(text);
       if (matcher.find()) {
         // Compile using MVEL templates.
@@ -80,18 +86,20 @@ class Node {
   public void emit(StringBuilder out, Map<String, Object> context) {
 
     if (!empty) {
-    out.append("\n");
+      out.append("\n");
 
-    // self closed tags.
-    if (text == null && children.isEmpty()) {
-      startTag(out).append("/>");
-      return;
-    }
+      // self closed tags.
+      if (text == null && children.isEmpty()) {
+        startTag(out).append("/>");
+        return;
+      }
 
       startTag(out).append('>');
     }
 
-    if (text != null)
+    if (wrappedExpression != null)
+      wrappedExpression.emit(out, context);
+    else if (text != null)
       out.append(text(context));
     else {
       for (Node child : children) {

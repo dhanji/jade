@@ -75,6 +75,12 @@ public class Jade {
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("-#")) {
         node = new IgnoredNode();
+      } else if (trimmedLine.startsWith("each")) {
+        // Treat raw html as text.
+        node = new EachNode();
+      } else if (trimmedLine.startsWith("if") || trimmedLine.startsWith("- if")) {
+        // Treat raw html as text.
+        node = new IfNode();
       } else if (trimmedLine.startsWith("-")) {
         node = new SilentExpressionNode();
         trimmedLine = trimmedLine.substring(1);
