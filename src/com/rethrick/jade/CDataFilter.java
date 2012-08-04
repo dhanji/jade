@@ -6,9 +6,9 @@ package com.rethrick.jade;
 class CDataFilter implements Filter {
   @Override public String filter(String indent, String text) {
     return indent
-        + "//<![CDATA[\n"
+        + "//<![CDATA["
         + text
-        + indent
-        + "//]]>\n";
+        + "\n"
+        + indent + "//]]>";
   }
 }

@@ -9,12 +9,25 @@
   <name>jade</name>
   <url>http://rethrick.com</url>
 
+  <repositories>
+    <repository>
+      <id>jade4j-releases</id>
+      <url>https://github.com/neuland/jade4j/raw/master/releases</url>
+    </repository>
+  </repositories>
+
   <dependencies>
    <dependency>
       <groupId>org.mvel</groupId>
       <artifactId>mvel2</artifactId>
       <version>2.1.Beta8</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.neuland</groupId>
+      <artifactId>jade4j</artifactId>
+      <version>0.2.15</version>
+      <scope>test</scope>
     </dependency>
    <dependency>
       <groupId>org.markdownj</groupId>

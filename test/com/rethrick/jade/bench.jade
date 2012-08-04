@@ -8,9 +8,8 @@ html
   body
     br
     p#f.doo foo
-    'pbj.doo'
-      / This is
-         a #{message}
+    / This is a comment
+    pbj.doo
       |Scrub Kindle! Ren & Stimpy
       Jade comment, not emitted.
       |More text
@@ -19,8 +18,9 @@ html
       :cdata
         Now is: __#{message}__ *winter* of our poop.
       em= 1 + a
+      - ls = [1, 2, 3]
 
-      each i in [1, 2, 3]
+      each i in 10
         yo!= i
       .doo.boo
         if false
