@@ -1,17 +1,25 @@
 package com.rethrick.jade;
 
+import org.mvel2.templates.CompiledTemplate;
+import org.mvel2.templates.TemplateCompiler;
+import org.mvel2.templates.TemplateRuntime;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  * @author dhanji@gmail.com (Dhanji R. Prasanna)
  */
 class Node {
   int indent;
-  String line;
-  String text;
   String tag;
+  String text;
+  String line;
+  CompiledTemplate compiledTemplate;
+
   private String id;
   private String classes;
   private List<Node> children = new ArrayList<Node>();
@@ -52,6 +60,14 @@ class Node {
         tag = split[0];
       classes = split[1];
     }
+
+    if (text != null) {
+      Matcher matcher = TextNode.START_OF_EXPR.matcher(text);
+      if (matcher.find()) {
+        // Compile using MVEL templates.
+        compiledTemplate = TemplateCompiler.compileTemplate(matcher.replaceAll("@{"));
+      }
+    }
   }
 
   public void emit(StringBuilder out, Map<String, Object> context) {
@@ -65,7 +81,7 @@ class Node {
     startTag(out).append('>');
 
     if (text != null)
-      out.append(text);
+      out.append(text(context));
     else {
       for (Node child : children) {
         child.emit(out, context);
@@ -98,5 +114,12 @@ class Node {
 
   public List<Node> getChildren() {
     return children;
+  }
+
+  public String text(Map<String, Object> context) {
+    if (compiledTemplate != null)
+      return TemplateRuntime.execute(compiledTemplate, context).toString();
+
+    return text == null ? line : text;
   }
 }

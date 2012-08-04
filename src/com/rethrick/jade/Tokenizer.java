@@ -1,8 +1,5 @@
 package com.rethrick.jade;
 
-import loop.Token;
-import loop.Util;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
