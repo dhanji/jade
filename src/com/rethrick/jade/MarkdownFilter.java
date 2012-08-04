@@ -17,7 +17,7 @@ class MarkdownFilter implements Filter {
     StringBuilder stripped = new StringBuilder();
     try {
       for (String line : Util.toLines(new StringReader(text))) {
-        stripped.append(line.substring(indent.length()));
+        stripped.append(line.substring(indent.length() + 2));
       }
     } catch (IOException e) {
       throw new RuntimeException(e);

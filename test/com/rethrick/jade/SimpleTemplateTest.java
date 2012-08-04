@@ -19,27 +19,7 @@ public class SimpleTemplateTest {
     context.put("message", "Cooommmmeeennt!");
 
     String out = new Jade().process(
-        "!!!\n" +
-        "html\n" +
-        "  head\n" +
-        "    title Spectacularr!\n" +
-        "    :javascript\n" +
-        "      alert('hi');\n" +
-        "      console.log('hi');\n" +
-        "  body\n" +
-        "    br\n" +
-        "    p#f.doo foo\n" +
-        "    'pbj.doo'\n" +
-        "      /This is\n" +
-        "         a #{message}\n" +
-        "      |Scrub Kindle!\n" +
-        "      -#Scrub Kindle2\n" +
-        "      |Scrub Kindle3\n" +
-        "      :markdown\n" +
-        "        Now is the *winter* of our poop.\n" +
-        "      = 1 + 2\n" +
-        "      .doo\n" +
-        "        <div id='blah'>sup</div>\n",
+        Util.toString(SimpleTemplateTest.class.getResourceAsStream("simple.jade")),
         context);
 
     System.out.println(out);

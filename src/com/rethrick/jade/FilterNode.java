@@ -25,7 +25,8 @@ class FilterNode extends Node {
   @Override public void emit(StringBuilder out, Map<String, Object> context) {
     StringBuilder text = new StringBuilder();
     for (Node child : getChildren()) {
-      text.append(child.indent()).append(child.line).append('\n');
+      text.append(child.indent());
+      child.emit(text, context);
     }
 
     out.append('\n').append(filter.filter(indent(), text.toString()));

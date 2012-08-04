@@ -43,6 +43,8 @@ public class Jade {
 
   private void readNode(List<Node> nodes, ListIterator<String> iterator, int lastIndent,
                         boolean treatAsText) {
+    boolean treatChildrenAsText = treatAsText;
+
     while (iterator.hasNext()) {
       String line = iterator.next();
 
@@ -67,6 +69,7 @@ public class Jade {
       } else if (trimmedLine.startsWith(":")) {
         node = new FilterNode(this);
         trimmedLine = trimmedLine.substring(1);
+        treatChildrenAsText = true;
       } else if (trimmedLine.startsWith("=")) {
         node = new ExpressionNode();
         trimmedLine = trimmedLine.substring(1);
@@ -86,7 +89,8 @@ public class Jade {
       if (indent > lastIndent) {
         if (iterator.hasPrevious())
           iterator.previous();
-        readNode(nodes.get(nodes.size() - 1).getChildren(), iterator, indent, treatAsText);
+        readNode(nodes.get(nodes.size() - 1).getChildren(), iterator, indent, treatChildrenAsText);
+        treatChildrenAsText = treatAsText;
         continue;
       } else if (indent < lastIndent) {
         iterator.previous();

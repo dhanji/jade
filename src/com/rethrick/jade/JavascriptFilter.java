@@ -8,8 +8,9 @@ class JavascriptFilter implements Filter {
     return indent
         + "<script type=\"text/javascript\">\n"
         + indent
-        + "  //<![CDATA[\n"
+        + "  //<![CDATA["
         + text
+        + "\n"
         + indent
         + "  //]]>\n"
         + indent
