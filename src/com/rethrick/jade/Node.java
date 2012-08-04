@@ -4,7 +4,6 @@ import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateCompiler;
 import org.mvel2.templates.TemplateRuntime;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,7 @@ class Node {
   String line;
   CompiledTemplate compiledTemplate;
 
+  private boolean empty;
   private String id;
   private String classes;
   private List<Node> children = new ArrayList<Node>();
@@ -27,6 +27,7 @@ class Node {
   public void setTemplate(int indent, String line) {
     this.indent = indent;
     this.line = line;
+    this.empty = line.isEmpty();
 
     // Treat literal tags differently.
     String[] split;
@@ -77,14 +78,18 @@ class Node {
   }
 
   public void emit(StringBuilder out, Map<String, Object> context) {
+
+    if (!empty) {
     out.append("\n");
+
     // self closed tags.
     if (text == null && children.isEmpty()) {
       startTag(out).append("/>");
       return;
     }
 
-    startTag(out).append('>');
+      startTag(out).append('>');
+    }
 
     if (text != null)
       out.append(text(context));
@@ -96,7 +101,8 @@ class Node {
     }
 
     // close tag.
-    out.append("</").append(tag).append('>');
+    if (!empty)
+      out.append("</").append(tag).append('>');
   }
 
   private StringBuilder startTag(StringBuilder out) {

@@ -86,15 +86,18 @@ public class Jade {
       } else
         node = new Node();
 
-      if (indent > lastIndent) {
-        if (iterator.hasPrevious())
+      if (!line.isEmpty()) {
+        if (indent > lastIndent) {
+          if (iterator.hasPrevious())
+            iterator.previous();
+          readNode(nodes.get(nodes.size() - 1).getChildren(), iterator, indent,
+              treatChildrenAsText);
+          treatChildrenAsText = treatAsText;
+          continue;
+        } else if (indent < lastIndent) {
           iterator.previous();
-        readNode(nodes.get(nodes.size() - 1).getChildren(), iterator, indent, treatChildrenAsText);
-        treatChildrenAsText = treatAsText;
-        continue;
-      } else if (indent < lastIndent) {
-        iterator.previous();
-        return;
+          return;
+        }
       }
 
       node.setTemplate(indent, trimmedLine);
