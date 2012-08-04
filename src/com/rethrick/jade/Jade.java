@@ -75,14 +75,17 @@ public class Jade {
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("-#")) {
         node = new IgnoredNode();
+      } else if (trimmedLine.startsWith("-")) {
+        node = new SilentExpressionNode();
+        trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("<")) {
         // Treat raw html as text.
-        node = new TextNode();
+        node = new RawNode();
       } else if (trimmedLine.startsWith("!!!")) {
         // Treat raw html as text.
         node = new DoctypeNode();
       } else if (treatAsText) {
-        node = new TextNode();
+        node = new RawNode();
       } else
         node = new Node();
 

@@ -11,12 +11,14 @@ html
     'pbj.doo'
       /This is
          a #{message}
-      |Scrub Kindle!
-      -#Scrub Kindle2
-      |Scrub Kindle3
+      |Scrub Kindle! Ren & Stimpy
+      -# Jade comment, not emitted.
+      |More text
+      - a = 5
 
       :markdown
         Now is: __#{message}__ *winter* of our poop.
-      = 1 + 2
-      .doo
+      = 1 + a
+      = "yo"
+      .doo.boo
         <div id='blah'>sup</div>

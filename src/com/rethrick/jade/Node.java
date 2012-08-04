@@ -62,7 +62,7 @@ class Node {
         id = split[0];
       else
         tag = split[0];
-      classes = split[1];
+      classes = split[1].replace('.', ' ');
     }
 
     if (tag.isEmpty())
