@@ -21,6 +21,12 @@ html
       em= 1 + a
 
       each i in [1, 2, 3]
-        yo= i
+        yo!= i
       .doo.boo
-        <div id='blah'>sup</div>
+        if false
+          do not print
+        else if false
+          dont print again
+        else
+          <div id='blah'>sup</div>
+

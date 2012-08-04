@@ -1,8 +1,6 @@
 package com.rethrick.jade;
 
 import org.mvel2.templates.CompiledTemplate;
-import org.mvel2.templates.TemplateCompiler;
-import org.mvel2.templates.TemplateRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +20,9 @@ class Node {
   private boolean empty;
   private String id;
   private String classes;
-  private ExpressionNode wrappedExpression;
+  private String wrappedExpression;
   private List<Node> children = new ArrayList<Node>();
+  private boolean escape = true;
 
   public void setTemplate(int indent, String line) {
     this.indent = indent;
@@ -72,13 +71,17 @@ class Node {
     // This is an expression tag.
     if (tag.endsWith("=")) {
       tag = tag.substring(0, tag.length() - 1);
-      wrappedExpression = new ExpressionNode();
-      wrappedExpression.setTemplate(indent, text);
+
+      if (tag.endsWith("!")) {
+        escape = false;
+        tag = tag.substring(0, tag.length() - 1);
+      }
+
+      wrappedExpression = text;
     } else if (text != null) {
       Matcher matcher = TextNode.START_OF_EXPR.matcher(text);
       if (matcher.find()) {
-        // Compile using MVEL templates.
-        compiledTemplate = TemplateCompiler.compileTemplate(matcher.replaceAll("@{"));
+        text = matcher.replaceAll("@{");
       }
     }
   }
@@ -97,11 +100,22 @@ class Node {
       startTag(out).append('>');
     }
 
-    if (wrappedExpression != null)
-      wrappedExpression.emit(out, context);
-    else if (text != null)
-      out.append(text(context));
-    else {
+    if (wrappedExpression != null) {
+      if (escape)
+        out.append("@{com.rethrick.jade.Escaper.escapeXml(");
+      else
+        out.append("@{");
+
+      out.append(wrappedExpression);
+
+      if (escape)
+        out.append(")}");
+      else
+        out.append("}");
+
+    } else if (text != null)
+      out.append(text);
+    if (!children.isEmpty()) {
       for (Node child : children) {
         child.emit(out, context);
       }
@@ -136,10 +150,7 @@ class Node {
     return children;
   }
 
-  public String text(Map<String, Object> context) {
-    if (compiledTemplate != null)
-      return TemplateRuntime.execute(compiledTemplate, context).toString();
-
+  public String text() {
     return text == null ? line : text;
   }
 }

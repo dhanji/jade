@@ -14,6 +14,18 @@ import static junit.framework.Assert.assertTrue;
  */
 public class SimpleTemplateTest {
   @Test
+  public final void toHtmlSimple() throws IOException {
+    HashMap<String, Object> context = new HashMap<String, Object>();
+    context.put("message", "Cooommmmeeennt!");
+
+    String out = new Jade().process(
+        Util.toString(SimpleTemplateTest.class.getResourceAsStream("simpler.jade")),
+        context);
+
+    System.out.println(out);
+  }
+
+  @Test
   public final void toHtml() throws IOException {
     HashMap<String, Object> context = new HashMap<String, Object>();
     context.put("message", "Cooommmmeeennt!");

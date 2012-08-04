@@ -3,7 +3,7 @@ package com.rethrick.jade;
 /**
  * @author dhanji@gmail.com (Dhanji R. Prasanna)
  */
-class Escaper {
+public class Escaper {
   public static String escapeXml(String xml) {
     StringBuilder escaped = new StringBuilder(xml.length());
     for (int i = 0; i < xml.length(); i++) {

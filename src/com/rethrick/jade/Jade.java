@@ -1,5 +1,9 @@
 package com.rethrick.jade;
 
+import org.mvel2.templates.CompiledTemplate;
+import org.mvel2.templates.TemplateCompiler;
+import org.mvel2.templates.TemplateRuntime;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -28,6 +32,10 @@ public class Jade {
   }
 
   public String process(String template, Map<String, Object> context) throws IOException {
+    return TemplateRuntime.execute(compile(template), context).toString();
+  }
+
+  public CompiledTemplate compile(String template) throws IOException {
     List<String> lines = Util.toLines(new StringReader(template));
 
     List<Node> nodes = new ArrayList<Node>(lines.size());
@@ -35,10 +43,10 @@ public class Jade {
 
     StringBuilder out = new StringBuilder();
     for (Node node : nodes) {
-      node.emit(out, context);
+      node.emit(out, null);
     }
 
-    return out.toString();
+    return TemplateCompiler.compileTemplate(out.toString());
   }
 
   private void readNode(List<Node> nodes, ListIterator<String> iterator, int lastIndent,
@@ -79,10 +87,13 @@ public class Jade {
         // Treat raw html as text.
         node = new EachNode();
       } else if (trimmedLine.startsWith("if") || trimmedLine.startsWith("- if")) {
-        // Treat raw html as text.
         node = new IfNode();
+      } else if (trimmedLine.startsWith("else") || trimmedLine.startsWith("- else")) {
+        node = new ElseNode();
+      } else if (trimmedLine.startsWith("unless")) {
+        node = new UnlessNode();
       } else if (trimmedLine.startsWith("-")) {
-        node = new SilentExpressionNode();
+        node = new QuietExpressionNode();
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("<")) {
         // Treat raw html as text.
@@ -110,7 +121,17 @@ public class Jade {
       }
 
       node.setTemplate(indent, trimmedLine);
-      nodes.add(node);
+
+      // Else nodes are treated specially, they are not actually siblings, but
+      // children of the if-node, even though they appear as siblings in the template.
+      if (node instanceof ElseNode) {
+        Node last = nodes.get(nodes.size() - 1);
+        if (!(last instanceof IfNode))
+          throw new RuntimeException("Malformed else clause (not aligned correctly with a parent if).");
+
+        last.getChildren().add(node);
+      } else
+        nodes.add(node);
     }
   }
 }

@@ -1,7 +1,5 @@
 package com.rethrick.jade;
 
-import org.mvel2.templates.TemplateCompiler;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 
@@ -18,14 +16,14 @@ class RawNode extends Node {
     Matcher matcher = TextNode.START_OF_EXPR.matcher(line);
     if (matcher.find()) {
       // Compile using MVEL templates.
-      compiledTemplate = TemplateCompiler.compileTemplate(matcher.replaceAll("@{"));
+      this.line = matcher.replaceAll("@{");
     }
 
     // Do not call super!
   }
 
   @Override public void emit(StringBuilder out, Map<String, Object> context) {
-    out.append('\n').append(indent()).append(text(context));
+    out.append('\n').append(indent()).append(text());
     for (Node child : getChildren()) {
       child.emit(out, context);
     }
