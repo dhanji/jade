@@ -65,9 +65,6 @@ class Node {
       classes = split[1].replace('.', ' ');
     }
 
-    if (tag.isEmpty())
-      tag = "div";
-
     // This is an expression tag.
     if (tag.endsWith("=")) {
       tag = tag.substring(0, tag.length() - 1);
@@ -84,6 +81,9 @@ class Node {
         text = matcher.replaceAll("@{");
       }
     }
+
+    if (tag.isEmpty())
+      tag = "div";
   }
 
   public void emit(StringBuilder out, Map<String, Object> context) {

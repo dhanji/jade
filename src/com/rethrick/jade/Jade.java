@@ -18,13 +18,26 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class Jade {
   final ConcurrentMap<String, Filter> filters = new ConcurrentHashMap<String, Filter>();
+  private final TemplateReader templateReader;
+  private final JadeOptions options;
 
   public Jade() {
+    this(new JadeOptions());
+  }
+
+  public Jade(JadeOptions options) {
     register("javascript", new JavascriptFilter());
     register("cdata", new CDataFilter());
     register("css", new CssFilter());
     register("markdown", new MarkdownFilter());
     register("plain", new PlainFilter());
+
+    this.options = options;
+    templateReader = new FileTemplateReader(this);
+  }
+
+  public JadeOptions options() {
+    return options;
   }
 
   public void register(String name, Filter filter) {
@@ -33,6 +46,10 @@ public class Jade {
 
   public String process(String template, Map<String, Object> context) throws IOException {
     return TemplateRuntime.execute(compile(template), context).toString();
+
+  }
+  public String execute(String name, Map<String, Object> context) throws IOException {
+    return TemplateRuntime.execute(templateReader.load(name), context).toString();
   }
 
   public CompiledTemplate compile(String template) throws IOException {
@@ -83,8 +100,9 @@ public class Jade {
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("-#")) {
         node = new IgnoredNode();
+      } else if (trimmedLine.startsWith("include ")) {
+        node = new IncludeNode(templateReader);
       } else if (trimmedLine.startsWith("each")) {
-        // Treat raw html as text.
         node = new EachNode();
       } else if (trimmedLine.startsWith("if") || trimmedLine.startsWith("- if")) {
         node = new IfNode();
@@ -110,6 +128,8 @@ public class Jade {
         if (indent > lastIndent) {
           if (iterator.hasPrevious())
             iterator.previous();
+          if (nodes.isEmpty())
+            throw new RuntimeException("Bad indentation--root node must appear at the top");
           readNode(nodes.get(nodes.size() - 1).getChildren(), iterator, indent,
               treatChildrenAsText);
           treatChildrenAsText = treatAsText;

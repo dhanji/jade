@@ -1,0 +1,29 @@
+!!!
+html
+  include includes/header
+  body
+    br
+    p#f.doo foo
+    'pbj.doo'
+      / This is
+         a #{message}
+      |Scrub Kindle! Ren & Stimpy
+      Jade comment, not emitted.
+      |More text
+      - a = 5
+
+      :markdown
+        Now is: __#{message}__ *winter* of our poop.
+      em= 1 + a
+
+      each i in [1, 2, 3]
+        yo!= i
+      .doo.boo
+        if false
+          do not print
+        else if false
+          dont print again
+        else
+          <div id='blah'>sup</div>
+
+  include includes/footer

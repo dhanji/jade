@@ -14,15 +14,15 @@ import static junit.framework.Assert.assertTrue;
  */
 public class SimpleTemplateTest {
   @Test
-  public final void toHtmlSimple() throws IOException {
+  public final void loadLinked() throws IOException {
     HashMap<String, Object> context = new HashMap<String, Object>();
     context.put("message", "Cooommmmeeennt!");
 
-    String out = new Jade().process(
-        Util.toString(SimpleTemplateTest.class.getResourceAsStream("simpler.jade")),
-        context);
+    JadeOptions options = new JadeOptions();
+    options.setBaseDir("views");
 
-    System.out.println(out);
+    Jade jade = new Jade(options);
+    System.out.println(jade.execute("layout", context));
   }
 
   @Test
