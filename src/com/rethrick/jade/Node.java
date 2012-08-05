@@ -1,7 +1,5 @@
 package com.rethrick.jade;
 
-import org.mvel2.templates.CompiledTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +9,12 @@ import java.util.regex.Matcher;
  * @author dhanji@gmail.com (Dhanji R. Prasanna)
  */
 class Node {
+  private final JadeOptions options;
+
   int indent;
   String tag;
   String text;
   String line;
-  CompiledTemplate compiledTemplate;
 
   private boolean empty;
   private String id;
@@ -23,6 +22,8 @@ class Node {
   private String wrappedExpression;
   private List<Node> children = new ArrayList<Node>();
   private boolean escape = true;
+
+  Node(JadeOptions options) { this.options = options; }
 
   public void setTemplate(int indent, String line) {
     this.indent = indent;
@@ -139,6 +140,9 @@ class Node {
   }
 
   public String indent() {
+    if (!options.isPretty())
+      return "";
+
     StringBuilder out = new StringBuilder(indent);
     for (int i = 0; i < indent; i++) {
       out.append(' ');

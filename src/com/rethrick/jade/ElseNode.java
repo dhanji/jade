@@ -8,6 +8,8 @@ import java.util.Map;
 class ElseNode extends Node {
   private String elseIfExpression;
 
+  ElseNode(JadeOptions options) {super(options);}
+
   @Override public void setTemplate(int indent, String line) {
     this.indent = indent;
     this.line = line;

@@ -8,6 +8,8 @@ import java.util.Map;
 class UnlessNode extends Node {
   private String ifExpression;
 
+  UnlessNode(JadeOptions options) {super(options);}
+
   @Override public void setTemplate(int indent, String line) {
     super.setTemplate(indent, line);
 

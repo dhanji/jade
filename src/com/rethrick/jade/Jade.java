@@ -29,7 +29,7 @@ public class Jade {
     register("javascript", new JavascriptFilter());
     register("cdata", new CDataFilter());
     register("css", new CssFilter());
-    register("markdown", new MarkdownFilter());
+    register("markdown", new MarkdownFilter(options));
     register("plain", new PlainFilter());
 
     this.options = options;
@@ -86,43 +86,43 @@ public class Jade {
 
       Node node;
       if (trimmedLine.startsWith("/")) {
-        node = new HtmlCommentNode();
+        node = new HtmlCommentNode(options);
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("|")) {
-        node = new TextNode();
+        node = new TextNode(options);
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith(":")) {
         node = new FilterNode(this);
         trimmedLine = trimmedLine.substring(1);
         treatChildrenAsText = true;
       } else if (trimmedLine.startsWith("=")) {
-        node = new ExpressionNode();
+        node = new ExpressionNode(options);
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("-#")) {
-        node = new IgnoredNode();
+        node = new IgnoredNode(options);
       } else if (trimmedLine.startsWith("include ")) {
-        node = new IncludeNode(templateReader);
+        node = new IncludeNode(options, templateReader);
       } else if (trimmedLine.startsWith("each")) {
-        node = new EachNode();
+        node = new EachNode(options);
       } else if (trimmedLine.startsWith("if") || trimmedLine.startsWith("- if")) {
-        node = new IfNode();
+        node = new IfNode(options);
       } else if (trimmedLine.startsWith("else") || trimmedLine.startsWith("- else")) {
-        node = new ElseNode();
+        node = new ElseNode(options);
       } else if (trimmedLine.startsWith("unless")) {
-        node = new UnlessNode();
+        node = new UnlessNode(options);
       } else if (trimmedLine.startsWith("-")) {
-        node = new QuietExpressionNode();
+        node = new QuietExpressionNode(options);
         trimmedLine = trimmedLine.substring(1);
       } else if (trimmedLine.startsWith("<")) {
         // Treat raw html as text.
-        node = new RawNode();
+        node = new RawNode(options);
       } else if (trimmedLine.startsWith("!!!")) {
         // Treat raw html as text.
-        node = new DoctypeNode();
+        node = new DoctypeNode(options);
       } else if (treatAsText) {
-        node = new RawNode();
+        node = new RawNode(options);
       } else
-        node = new Node();
+        node = new Node(options);
 
       if (!line.isEmpty()) {
         if (indent > lastIndent) {

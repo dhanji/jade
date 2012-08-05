@@ -10,6 +10,7 @@ class FilterNode extends Node {
   private Filter filter;
 
   public FilterNode(Jade jade) {
+    super(jade.options());
     this.jade = jade;
   }
 

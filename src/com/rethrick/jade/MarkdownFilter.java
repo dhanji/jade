@@ -9,15 +9,22 @@ import java.io.StringReader;
  * @author dhanji@gmail.com (Dhanji R. Prasanna)
  */
 class MarkdownFilter implements Filter {
-  private final boolean pretty = true;
+  private final boolean pretty;
   private final MarkdownProcessor markdown = new MarkdownProcessor();
+
+  public MarkdownFilter(JadeOptions options) {
+    pretty = options.isPretty();
+  }
 
   @Override public String filter(String indent, String text) {
     // Strip indentation before processing text. Because markdown is so indentation sensitive.
     StringBuilder stripped = new StringBuilder();
     try {
       for (String line : Util.toLines(new StringReader(text))) {
-        stripped.append(line.substring(indent.length() + 2));
+        if (pretty)
+          stripped.append(line.substring(indent.length() + 2));
+        else
+          stripped.append(line);
       }
     } catch (IOException e) {
       throw new RuntimeException(e);

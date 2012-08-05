@@ -8,6 +8,8 @@ import java.util.Map;
 class EachNode extends Node {
   private String eachExpression;
 
+  EachNode(JadeOptions options) {super(options);}
+
   @Override public void setTemplate(int indent, String line) {
     super.setTemplate(indent, line);
 

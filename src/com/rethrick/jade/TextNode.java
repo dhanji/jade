@@ -10,6 +10,8 @@ class TextNode extends Node {
   static final Pattern START_OF_EXPR = Pattern.compile("[#][{]");
   private boolean escape = true;
 
+  TextNode(JadeOptions options) {super(options);}
+
   @Override
   public void setTemplate(int indent, String line) {
     this.indent = indent;

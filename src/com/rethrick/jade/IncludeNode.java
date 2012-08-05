@@ -12,7 +12,9 @@ import java.util.Map;
 class IncludeNode extends Node {
   private final TemplateReader templateReader;
 
-  IncludeNode(TemplateReader templateReader) { this.templateReader = templateReader; }
+  IncludeNode(JadeOptions options, TemplateReader templateReader) {
+    super(options);
+    this.templateReader = templateReader; }
 
   @Override public void setTemplate(int indent, String line) {
     super.setTemplate(indent, line);

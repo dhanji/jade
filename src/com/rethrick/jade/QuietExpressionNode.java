@@ -7,6 +7,8 @@ import java.util.Map;
  */
 class QuietExpressionNode extends Node {
 
+  QuietExpressionNode(JadeOptions options) {super(options);}
+
   @Override public void emit(StringBuilder out, Map<String, Object> context) {
     if (!line.isEmpty())
       out.append("\n@code{\n").append(indent()).append(line).append("\n}");

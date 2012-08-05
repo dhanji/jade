@@ -7,6 +7,10 @@ import java.util.regex.Matcher;
  * @author dhanji@gmail.com (Dhanji R. Prasanna)
  */
 class RawNode extends Node {
+  RawNode(JadeOptions options) {
+    super(options);
+  }
+
   @Override
   public void setTemplate(int indent, String line) {
     this.indent = indent;

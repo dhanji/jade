@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spectacularr!</title>
+    <script type="text/javascript">
+      //<![CDATA[
+      alert('hi');
+        console.log('hi');
+      //]]>
+    </script>
+  </head>
+  <body>
+    <br/>
+    <p id="f" class="doo">foo</p>
+    <pbj.doo>
+      <!--  This is
+         <a>Cooommmmeeennt!</a> -->
+      Scrub Kindle! Ren &amp; Stimpy
+      <Jade>comment, not emitted.</Jade>
+      More text
+
+      <p>Now is: <strong>Cooommmmeeennt!</strong> <em>winter</em> of our poop.</p>
+      <em>6</em>
+
+        <yo>1</yo>
+        <yo>2</yo>
+        <yo>3</yo>
+      <div class="doo boo">
+          <div id='blah'>sup</div>
+      </div>
+    </pbj.doo>
+  </body>
+</html>

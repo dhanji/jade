@@ -19,6 +19,8 @@ class DoctypeNode extends Node {
 
   private String charset;
 
+  DoctypeNode(JadeOptions options) {super(options);}
+
   @Override public void emit(StringBuilder out, Map<String, Object> context) {
     if (text == null)
       out.append("<!DOCTYPE html>");
