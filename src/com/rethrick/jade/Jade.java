@@ -65,6 +65,7 @@ public class Jade {
       node.emit(out, null);
     }
 
+    System.out.println(out.toString());
     return TemplateCompiler.compileTemplate(out.toString());
   }
 

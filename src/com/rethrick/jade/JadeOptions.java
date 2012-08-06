@@ -5,8 +5,17 @@ package com.rethrick.jade;
  */
 public class JadeOptions {
   private boolean pretty = true;
+  private boolean cache = false;
   private String baseDir = ".";
   private TemplateReader templateReader;
+
+  public boolean isCache() {
+    return cache;
+  }
+
+  public void setCache(boolean cache) {
+    this.cache = cache;
+  }
 
   public boolean isPretty() {
     return pretty;

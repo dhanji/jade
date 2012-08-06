@@ -17,10 +17,12 @@ class FileTemplateReader implements TemplateReader {
 
   private final Jade jade;
   private final String baseDir;
+  private final boolean cache;
 
   public FileTemplateReader(Jade jade) {
     this.jade = jade;
     this.baseDir = jade.options().getBaseDir();
+    this.cache = jade.options().isCache();
   }
 
   public CompiledTemplate load(String name) {
@@ -32,7 +34,9 @@ class FileTemplateReader implements TemplateReader {
       FileInputStream input = new FileInputStream(new File(baseDir + "/" + name + ".jade"));
       String text = Util.toString(input);
 
-      templates.putIfAbsent(name, template = jade.compile(text));
+      CompiledTemplate compiledTemplate = template = jade.compile(text);
+      if (cache)
+        templates.putIfAbsent(name, compiledTemplate);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
