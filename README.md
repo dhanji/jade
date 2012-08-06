@@ -15,7 +15,7 @@ We ship the following filters out of the box:
   * `:cdata` - outputs the inner text inside CDATA tag
   * `:css` - outputs the inner text inside `<style>` tag
 
-My version of Jade is __about 6x faster than Jade4j__, the standard implementation linked from jade-lang.com. You can run the
+My version of Jade is __about 4x faster than Jade4j__, the standard implementation linked from jade-lang.com. You can run the
 [benchmark yourself](https://github.com/dhanji/jade/blob/master/test/com/rethrick/jade/JadeVsJade4jBenchmark.java).
 
 Other differences from Jade4j:

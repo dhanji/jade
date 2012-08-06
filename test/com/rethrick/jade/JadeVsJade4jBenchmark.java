@@ -40,11 +40,11 @@ public class JadeVsJade4jBenchmark {
 
   public static void main(String[] args) throws IOException {
     String template = Util.toString(JadeVsJade4jBenchmark.class.getResourceAsStream(
-        "com/rethrick/jade/bench.jade"));
+        "bench.jade"));
 
     JadeConfiguration config = new JadeConfiguration();
     config.setPrettyPrint(true);
-    JadeTemplate jade4jTemplate = config.getTemplate("test/com/rethrick/jade/bench");
+    JadeTemplate jade4jTemplate = config.getTemplate("test-resources/com/rethrick/jade/bench");
     CompiledTemplate mvelTemplate = new Jade().compile(template);
 
     Map<String, Object> map = new HashMap<String, Object>();
