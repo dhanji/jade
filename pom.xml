@@ -5,7 +5,7 @@
   <groupId>com.rethrick</groupId>
   <artifactId>jade</artifactId>
   <packaging>jar</packaging>
-  <version>0.1</version>
+  <version>1.0</version>
   <name>jade</name>
   <url>http://rethrick.com</url>
 
@@ -14,6 +14,10 @@
       <id>jade4j-releases</id>
       <url>https://github.com/neuland/jade4j/raw/master/releases</url>
     </repository>
+    <repository>
+      <id>codehaus</id>
+      <url>http://repository.codehaus.org</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -21,7 +25,6 @@
       <groupId>org.mvel</groupId>
       <artifactId>mvel2</artifactId>
       <version>2.1.Beta8</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>de.neuland</groupId>
