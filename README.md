@@ -24,7 +24,7 @@ Other differences from Jade4j:
   * all emitted expressions are xml-escaped by default
   * literal tags work (e.g. `'foo.bar'` emits `<foo.bar>`)
   * attribute tags can be MVEL/Java expressions if using braces: `p{ 'time' : new java.util.Date() }`
-  * any text in the template is a candidate for string-interpolation (not just `|` text lines)
+  * any text in the template is a candidate for xml-escaping (not just `|` text lines)
   * Jade is much more lenient with template parsing than Jade4j
 
 ...all this works perfectly in our Jade. whereas I was not able to get any of them
