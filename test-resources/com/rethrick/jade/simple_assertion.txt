@@ -11,8 +11,8 @@
   </head>
   <body>
     <br/>
-    <p id="f" class="doo">foo</p>
-    <pbj.doo>
+    <p id="f" class="doo" x="y" z="p">foo</p>
+    <pbj.doo contentEditable="true">
       <!--  This is
          <a>Cooommmmeeennt!</a> -->
       Scrub Kindle! Ren &amp; Stimpy
@@ -20,12 +20,12 @@
       More text
 
       <p>Now is: <strong>Cooommmmeeennt!</strong> <em>winter</em> of our poop.</p>
-      <em>6</em>
+      <em date="Thu Jan 01 10:00:00 EST 1970" gate="23">6</em>
 
         <yo>1</yo>
         <yo>2</yo>
         <yo>3</yo>
-      <div class="doo boo">
+      <div class="doo boo" checked>
           <div id='blah'>sup</div>
       </div>
     </pbj.doo>

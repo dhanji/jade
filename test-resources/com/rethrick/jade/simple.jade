@@ -8,7 +8,7 @@ html
   body
     br
     p#f.doo(x=y z=p) foo
-    'pbj.doo'
+    'pbj.doo'(contentEditable=true)
       / This is
          a #{message}
       |Scrub Kindle! Ren & Stimpy
@@ -18,11 +18,11 @@ html
 
       :markdown
         Now is: __#{message}__ *winter* of our poop.
-      em= 1 + a
+      em{ 'date': new java.util.Date(1), 'gate': 23 }= 1 + a
 
       each i in [1, 2, 3]
         yo!= i
-      .doo.boo
+      .doo.boo(checked)
         if false
           do not print
         else if false

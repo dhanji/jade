@@ -1,8 +1,6 @@
 package com.rethrick.jade;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 
 /**
@@ -22,6 +20,8 @@ class Node {
   private String wrappedExpression;
   private List<Node> children = new ArrayList<Node>();
   private boolean escape = true;
+  private Map<String, String> attributes;
+  private String attributeExpression;
 
   Node(JadeOptions options) { this.options = options; }
 
@@ -34,6 +34,8 @@ class Node {
     String[] split;
     if (line.startsWith("'") && line.length() > 1) {
       int end = line.indexOf("'", 1);
+      line = parseAttributeDeclaration(line);
+
       tag = line.substring(1, end);
       text = line.substring(end + 1);
 
@@ -42,9 +44,13 @@ class Node {
 
       if (text.isEmpty())
         text = null;
+
       return;
     }
 
+    line = parseAttributeDeclaration(line);
+
+    // We now process the specifics of the tag itself (ids, classes etc.)
     split = line.split("[ ]+", 2);
     this.tag = split[0];
     if (split.length > 1)
@@ -85,6 +91,62 @@ class Node {
 
     if (tag.isEmpty())
       tag = "div";
+  }
+
+  private String parseAttributeDeclaration(String line) {
+    int lparen = line.indexOf("(");
+    int endOfFragment = line.indexOf(" ");
+    if (endOfFragment == -1)
+      endOfFragment = line.length() - 1;
+    if (lparen > -1 && endOfFragment > lparen) {
+      int rparen = balancedCapture(line, '(', ')', lparen);
+
+      String attributeLine = line.substring(lparen + 1, rparen);
+      attributes = new LinkedHashMap<String, String>();
+      for (String pair : attributeLine.split("[ ]+")) {
+        String[] keyValue = pair.split("[=]");
+        String value = keyValue.length > 1 ? keyValue[1] : "";
+
+        attributes.put(keyValue[0], value);
+      }
+
+      // Recompose the line by "deleting" the attribute portion from it.
+      line = line.substring(0, lparen) + line.substring(rparen + 1);
+    } else {
+      int lbrace = line.indexOf("{");
+      if (lbrace > -1 && endOfFragment > lbrace) {
+        int rbrace = balancedCapture(line, '{', '}', lbrace);
+
+        // Convert to MVEL attribute expression.
+        attributeExpression = '[' + line.substring(lbrace + 1, rbrace) + ']';
+
+        // Recompose the line by "deleting" the attribute portion from it.
+        line = line.substring(0, lbrace) + line.substring(rbrace + 1);
+      }
+    }
+    return line;
+  }
+
+  private int balancedCapture(String line, char start, char end, int lparen) {
+    // This is a legitimate attribute marker.
+    // Use state machine to parse attribute set until rparen.
+    int parenCount = 0, rparen = -1;
+    for (int i = lparen; i < line.length(); i++) {
+      char c = line.charAt(i);
+
+      if (c == start)
+        parenCount++;
+      if (c == end) {
+        parenCount--;
+
+        // We've come to the end of this attrib group.
+        if (parenCount == 0) {
+          rparen = i;
+          break;
+        }
+      }
+    }
+    return rparen;
   }
 
   public void emit(StringBuilder out, Map<String, Object> context) {
@@ -135,6 +197,20 @@ class Node {
 
     if (classes != null)
       out.append(" class=\"").append(classes).append("\"");
+
+    if (attributes != null)
+      for (Map.Entry<String, String> attribute : attributes.entrySet()) {
+        out.append(' ').append(attribute.getKey());
+
+        // Allow for html-style (valueless) attributes.
+        if (!attribute.getValue().isEmpty())
+            out.append("=\"")
+            .append(attribute.getValue())
+            .append("\"");
+      }
+    else if (attributeExpression != null)
+      out.append("@{com.rethrick.jade.Escaper.toTagAttributes(").append(attributeExpression)
+          .append(")}");
 
     return out;
   }
