@@ -76,4 +76,10 @@ current working directory.
 Thanks to the original author or Jade, and respect to the authors of Jade4j. It was not my
 intention to dissect or one-up Jade4j, I implemented a Java version of Jade while not realizing
 that Jade4j existed until well into the project(!). So, rather than abandon a day's work,
-I ran a quick performance comparison and felt good that my effort was not wasted after all. =)
+I ran a quick performance comparison and felt good that my effort was not wasted after all.
+
+Also a copyright notice--I do not own, nor am I in any way affiliated with the original author(s)
+of Jade (seen at jade-lang.org). If you are really bothered by my referring to this project as jade
+please feel free to call it *MVEL Jade* or *Dhanji's Jade*. =)
+
+License is MIT. Do what you like, but some credit would be nice.
