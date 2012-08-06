@@ -6,6 +6,7 @@ package com.rethrick.jade;
 public class JadeOptions {
   private boolean pretty = true;
   private String baseDir = ".";
+  private TemplateReader templateReader;
 
   public boolean isPretty() {
     return pretty;
@@ -21,5 +22,13 @@ public class JadeOptions {
 
   public void setBaseDir(String baseDir) {
     this.baseDir = baseDir;
+  }
+
+  public TemplateReader getTemplateReader() {
+    return templateReader;
+  }
+
+  public void setTemplateReader(TemplateReader templateReader) {
+    this.templateReader = templateReader;
   }
 }

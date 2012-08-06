@@ -33,7 +33,9 @@ public class Jade {
     register("plain", new PlainFilter());
 
     this.options = options;
-    templateReader = new FileTemplateReader(this);
+    templateReader = options.getTemplateReader() != null
+        ? options.getTemplateReader()
+        : new FileTemplateReader(this);
   }
 
   public JadeOptions options() {
