@@ -21,7 +21,8 @@ public class JadeVsJade4jBenchmark {
 
 //  @Test
   public void compare() throws IOException {
-    String template = Util.toString(JadeVsJade4jBenchmark.class.getResourceAsStream("bench.jade"));
+    String template = Util.toString(JadeVsJade4jBenchmark.class.getResourceAsStream(
+        "com/rethrick/jade/bench.jade"));
 
     JadeConfiguration config = new JadeConfiguration();
     config.setPrettyPrint(true);
@@ -37,7 +38,8 @@ public class JadeVsJade4jBenchmark {
   }
 
   public static void main(String[] args) throws IOException {
-    String template = Util.toString(JadeVsJade4jBenchmark.class.getResourceAsStream("bench.jade"));
+    String template = Util.toString(JadeVsJade4jBenchmark.class.getResourceAsStream(
+        "com/rethrick/jade/bench.jade"));
 
     JadeConfiguration config = new JadeConfiguration();
     config.setPrettyPrint(true);

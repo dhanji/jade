@@ -38,7 +38,8 @@ public class SimpleTemplateTest {
         context)));
 
     List<String> expected = Util.toLines(
-        new InputStreamReader(SimpleTemplateTest.class.getResourceAsStream("simple_assertion.txt")));
+        new InputStreamReader(SimpleTemplateTest.class.getResourceAsStream(
+            "simple_assertion.txt")));
 
     // Line-by-line comparison without trailing whitespace.
     for (int i = 0, expectedSize = expected.size(); i < expectedSize; i++) {
