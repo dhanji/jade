@@ -2,7 +2,7 @@ Jade
 ====
 
 Jade-like templating engine for Java. Pretty much clones all the features found
-in [jade-lang.org](http://jade-lang.org). The main difference is that it uses
+in [jade-lang.com](http://jade-lang.com). The main difference is that it uses
 [MVEL](http://mvel.codehaus.org) instead of javascript for the expressions.
 
 In addition to this it also clones most of the (very cool) features in
@@ -15,7 +15,7 @@ We ship the following filters out of the box:
   * `:cdata` - outputs the inner text inside CDATA tag
   * `:css` - outputs the inner text inside `<style>` tag
 
-My version of Jade is __about 6x faster than Jade4j__, the standard implementation linked from jade-lang.org. You can run the
+My version of Jade is __about 6x faster than Jade4j__, the standard implementation linked from jade-lang.com. You can run the
 [benchmark yourself](https://github.com/dhanji/jade/blob/master/test/com/rethrick/jade/JadeVsJade4jBenchmark.java).
 
 Other differences from Jade4j:
@@ -81,7 +81,7 @@ that Jade4j existed until well into the project(!). So, rather than abandon a da
 I ran a quick performance comparison and felt good that my effort was not wasted after all.
 
 Also a copyright notice--I do not own, nor am I in any way affiliated with the original author(s)
-of Jade (seen at jade-lang.org). If you are really bothered by my referring to this project as Jade
+of Jade (seen at jade-lang.com). If you are really bothered by my referring to this project as Jade
 please feel free to call it *MVEL Jade* or *Dhanji's Jade*. =)
 
 License is MIT. Do what you like with it, but some credit would be nice.
