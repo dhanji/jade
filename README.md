@@ -1,33 +1,34 @@
 jade
 ====
 
-Jade-like templating engine for Java. We pretty much clone all the features found
-in [jade-lang.org](http://jade-lang.org). The main difference is that we do use
+Jade-like templating engine for Java. Pretty much clones all the features found
+in [jade-lang.org](http://jade-lang.org). The main difference is that it uses
 [MVEL](http://mvel.codehaus.org) instead of javascript for the expressions.
 
-In addition to this we also clone most of the features in
+In addition to this it also clones most of the (very cool) features in
  [Scalate's Jade](http://scalate.fusesource.org/documentation/jade.html) implementation.
 
-We also ship the following filters
+We ship the following filters out of the box:
   * `:markdown` - requires MarkdownJ on the classpath
   * `:javascript` - wraps the inner text inside `<script>` tag
   * `:plain` - raw text dumped out
   * `:cdata` - outputs the inner text inside CDATA tag
   * `:css` - outputs the inner text inside `<style>` tag
 
-Our Jade is about 6x faster than Jade4j, the standard linked implementation. You can run the
+My version of Jade is __about 6x faster than Jade4j__, the standard linked implementation. You can run the
 [benchmark yourself](https://github.com/dhanji/jade/blob/master/test/com/rethrick/jade/JadeVsJade4jBenchmark.java).
 
-Other differences from Jade4j are that all of the following works in our impl:
+Other differences from Jade4j:
   * iteration with __each__
-  * '-#' Jade-level comments (no emitted content)
+  * `-#` Jade-level comments (no emitted content)
   * all emitted expressions are html-escaped by default
   * literal tags work (e.g. `'foo.bar'` emits `<foo.bar>`)
   * attribute tags can be MVEL expressions if using braces: `p{ 'time' : new java.util.Date() }`
   * any text in the template is a candidate for string-interpolation (not only text lines)
   * jade is much more lenient with template parsing than Jade4j
 
-...whereas I was not able to get any of them to work in side-by-side tests.
+...all this works perfectly in our Jade. whereas I was not able to get any of them
+to work in side-by-side tests (plz feel free to correct me if I'm wrong).
 
 
 ## Usage
@@ -69,6 +70,7 @@ current working directory.
 
   * Jade does not currently support the `block` keyword from Javascript's Jade
   * Please consult the MVEL language for details on how to construct expressions
+  * Add your own filters by implementing the `Filter` interface and calling `Jade.register()`
 
 
 #### A quick note
