@@ -19,13 +19,11 @@ My version of Jade is __about 4x faster than Jade4j__, the standard implementati
 [benchmark yourself](https://github.com/dhanji/jade/blob/master/test/com/rethrick/jade/JadeVsJade4jBenchmark.java).
 
 Other differences from Jade4j:
-  * iteration with __each__
   * `-#` Jade-level comments (no emitted content)
-  * all emitted expressions are xml-escaped by default
   * literal tags work (e.g. `'foo.bar'` emits `<foo.bar>`)
   * attribute tags can be MVEL/Java expressions if using braces: `p{ 'time' : new java.util.Date() }`
   * any text in the template is a candidate for xml-escaping (not just `|` text lines)
-  * Jade is much more lenient with template parsing than Jade4j
+  * Jade is more lenient with template parsing than Jade4j
 
 ...all this works perfectly in our Jade. whereas I was not able to get any of them
 to work in side-by-side tests (plz feel free to correct me if I'm wrong).
@@ -65,6 +63,10 @@ can include templates inside each other using this scheme). To customize Jade, c
 
 This looks for and processes a template named `home.jade` in the `views` sub-directory of the
 current working directory.
+
+### Thread-safety
+
+A `Jade` object is explicitly thread-safe and can be shared among multiple threads with no synchnronization overhead. The template cache and filter set are also concurrent and can be updated at any time.
 
 ### Keep in mind
 
