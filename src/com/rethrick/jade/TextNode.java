@@ -21,6 +21,11 @@ class TextNode extends Node {
     if (line.startsWith("!")) {
       this.line = line.substring(1);
       escape = false;
+    }else{
+        Matcher matcher = TextNode.START_OF_EXPR.matcher(this.line);
+        if (matcher.find()) {
+          this.line = matcher.replaceAll("@{");
+        }
     }
   }
 
