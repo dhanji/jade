@@ -20,7 +20,7 @@
       More text
 
       <p>Now is: <strong>Cooommmmeeennt!</strong> <em>winter</em> of our poop.</p>
-      <em date="Thu Jan 01 10:00:00 EST 1970" gate="23">6</em>
+      <em date="1 Jan 1970 00:00:00 GMT" gate="23">6</em>
 
         <yo>1</yo>
         <yo>2</yo>

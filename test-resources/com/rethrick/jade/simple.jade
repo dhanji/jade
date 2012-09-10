@@ -18,7 +18,7 @@ html
 
       :markdown
         Now is: __#{message}__ *winter* of our poop.
-      em{ 'date': new java.util.Date(1), 'gate': 23 }= 1 + a
+      em{ 'date': new java.util.Date(1).toGMTString(), 'gate': 23 }= 1 + a
 
       each i in [1, 2, 3]
         yo!= i
