@@ -1,6 +1,7 @@
 package com.rethrick.jade;
 
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -21,7 +22,7 @@ class TextNode extends Node {
     if (line.startsWith("!")) {
       this.line = line.substring(1);
       escape = false;
-    }else{
+    } else {
         Matcher matcher = TextNode.START_OF_EXPR.matcher(this.line);
         if (matcher.find()) {
           this.line = matcher.replaceAll("@{");
