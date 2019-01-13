@@ -66,7 +66,7 @@ current working directory.
 
 ### Thread-safety
 
-A `Jade` object is explicitly thread-safe and can be shared among multiple threads with no synchnronization overhead. The template cache and filter set are also concurrent and can be updated at any time.
+A `Jade` object is explicitly thread-safe and can be shared among multiple threads with no synchronization overhead. The template cache and filter set are also concurrent and can be updated at any time.
 
 ### Keep in mind
 
